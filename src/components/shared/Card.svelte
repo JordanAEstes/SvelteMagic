@@ -19,8 +19,9 @@
 		box-shadow: 1px 1px 8px rgb(0 0 0 / 50%);
 	}
 	.card-detail-card {
-		width: 60%;
-		margin-left: 20%;
+		width: 70%;
+		margin-left: 15%;
 		box-shadow: 1px 1px 8px rgb(0 0 0 / 50%);
+		background-color: #eee;
 	}
 </style>

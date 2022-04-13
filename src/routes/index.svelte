@@ -4,6 +4,7 @@
 	import Tabs from '../components/shared/Tabs.svelte';
 	import Header from '../components/shared/Header.svelte';
 	import CardShow from '../components/CardShow.svelte';
+	import YourCards from '../components/YourCards.svelte'
 	let items = ['Search', 'Your Cards'];
 	let activeItem = 'Search';
 	let activeView = 'List';
@@ -37,6 +38,10 @@
 	const handleBack = () => {
 		activeView = 'List';
 	};
+	const handleAdd = () => {
+		activeView = 'List'
+		activeItem = 'Your Cards'
+	}
 </script>
 
 <Header />
@@ -49,10 +54,10 @@
 				<CardList {cards} on:handleShow={handleShow} />
 			{/if}
 		{:else if activeView == 'Show'}
-			<CardShow {selectedCard} on:click={handleBack} />
+			<CardShow {selectedCard} on:click={handleBack} on:add={handleAdd} />
 		{/if}
 	{:else if activeItem === 'Your Cards'}
-		<p>your card list here</p>
+		<YourCards on:handleShow/>
 	{/if}
 </main>
 

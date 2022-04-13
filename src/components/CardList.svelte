@@ -6,7 +6,7 @@
 	export let cards = [];
 </script>
 
-<div class="poll-list">
+<div class="card-list">
 	{#each cards as card (card.multiverseid)}
 		<div in:fade|local animate:flip={{ duration: 500 }}>
 			<CardDetail {card} on:handleShow />
@@ -15,7 +15,7 @@
 </div>
 
 <style>
-	.poll-list {
+	.card-list {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-gap: 10px;

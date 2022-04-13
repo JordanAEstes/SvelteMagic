@@ -1,6 +1,18 @@
 <script>
+	import YourCardStore from '../stores/YourCardStore';
 	import Card from './shared/Card.svelte';
+	import Button from './shared/Button.svelte'
+	import { createEventDispatcher } from "svelte"
 	export let selectedCard;
+
+	let dispatch = createEventDispatcher();
+
+	const handleAdd = () => {
+		YourCardStore.update((currentCards) => {
+			return [selectedCard, ...currentCards]
+		});
+		dispatch('add');
+	}
 </script>
 
 <div class="back-button">
@@ -11,11 +23,21 @@
 
 	<Card show={true} list={false} optionalClass="card-detail-card">
 		<h1>{selectedCard.name}</h1>
-		<div class="details">
-			<h3>{selectedCard.originalType}</h3>
-			<h3>{selectedCard.cmc}</h3>
+		<div class=detail-container>
+			<div class="details">
+				<h3 id="type">{selectedCard.originalType}</h3>
+				<h3 id="mana-value">Mana cost: {selectedCard.manaCost}</h3>
+			</div>
+			<div class="details">
+				<h3 id="rarity">Rarity: {selectedCard.rarity}</h3>
+				<h3 id="set-name">Set Name: {selectedCard.setName}</h3>
+			</div>
+			<div class="details">
+				<h3>{selectedCard.text}</h3>
+			</div>
 		</div>
 	</Card>
+	<Button on:click={handleAdd}>Add to Your Cards</Button>
 </div>
 
 <style>
@@ -30,9 +52,14 @@
 	.back-button {
 		cursor: pointer;
 	}
+	.detail-container{
+		display: flex;
+		flex-direction: column;
+	}
 	.details {
 		display: flex;
 		flex-direction: row;
+		justify-content: space-between;
 	}
 	h1 {
 		color: #3e2d2d;
@@ -41,7 +68,8 @@
 	}
 	h3 {
 		color: #3e2d2d;
-		padding: 5% 0;
+		padding: 0 2%;
 		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 	}
+	
 </style>
