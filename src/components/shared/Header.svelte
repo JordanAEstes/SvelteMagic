@@ -1,5 +1,5 @@
 <script>
-	import logo from '../static/magic_logo.svg';
+	import logo from '../../static/magic_logo.svg';
 </script>
 
 <header>
