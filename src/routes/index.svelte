@@ -4,7 +4,7 @@
 	import Tabs from '../components/shared/Tabs.svelte';
 	import Header from '../components/shared/Header.svelte';
 	import CardShow from '../components/CardShow.svelte';
-	import YourCards from '../components/YourCards.svelte'
+	import YourCards from '../components/YourCards.svelte';
 	let items = ['Search', 'Your Cards'];
 	let activeItem = 'Search';
 	let activeView = 'List';
@@ -16,6 +16,7 @@
 	};
 
 	const handleSearch = async (e) => {
+		cards = [];
 		activeView = 'List';
 		let searchQuery = e.detail;
 		let response = await fetch(`https://api.magicthegathering.io/v1/cards?name=${searchQuery}`);
@@ -31,17 +32,19 @@
 	};
 
 	const handleShow = (e) => {
+		activeItem = 'Search';
 		activeView = 'Show';
 		selectedCard = e.detail;
+		console.log(activeItem, activeView, selectedCard);
 	};
 
 	const handleBack = () => {
 		activeView = 'List';
 	};
 	const handleAdd = () => {
-		activeView = 'List'
-		activeItem = 'Your Cards'
-	}
+		activeView = 'List';
+		activeItem = 'Your Cards';
+	};
 </script>
 
 <Header />
@@ -57,7 +60,7 @@
 			<CardShow {selectedCard} on:click={handleBack} on:add={handleAdd} />
 		{/if}
 	{:else if activeItem === 'Your Cards'}
-		<YourCards on:handleShow/>
+		<YourCards on:handleShow={handleShow} />
 	{/if}
 </main>
 
