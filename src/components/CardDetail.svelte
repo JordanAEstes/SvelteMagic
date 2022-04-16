@@ -3,7 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 	const handleShow = (card) => {
-		console.log('show');
+		console.log('show', card);
 		dispatch('handleShow', card);
 	};
 

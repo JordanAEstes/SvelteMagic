@@ -1,18 +1,20 @@
 <script>
 	import YourCardStore from '../stores/YourCardStore';
 	import Card from './shared/Card.svelte';
-	import Button from './shared/Button.svelte'
-	import { createEventDispatcher } from "svelte"
+	import Button from './shared/Button.svelte';
+	import Formats from '../components/shared/Formats.svelte';
+	import { createEventDispatcher } from 'svelte';
+	import { text } from 'svelte/internal';
 	export let selectedCard;
 
 	let dispatch = createEventDispatcher();
 
 	const handleAdd = () => {
 		YourCardStore.update((currentCards) => {
-			return [selectedCard, ...currentCards]
+			return [selectedCard, ...currentCards];
 		});
 		dispatch('add');
-	}
+	};
 </script>
 
 <div class="back-button">
@@ -21,9 +23,14 @@
 <div class="card-details">
 	<img src={selectedCard.imageUrl} alt="{selectedCard.name} image" />
 
-	<Card show={true} list={false} optionalClass="card-detail-card">
+	<Card
+		show={true}
+		list={false}
+		optionalClass="card-detail-card"
+		colorClass={selectedCard.colors ? selectedCard.colors[0].toLowerCase() : 'colorless'}
+	>
 		<h1>{selectedCard.name}</h1>
-		<div class=detail-container>
+		<div class="detail-container">
 			<div class="details">
 				<h3 id="type">{selectedCard.originalType}</h3>
 				<h3 id="mana-value">Mana cost: {selectedCard.manaCost}</h3>
@@ -32,10 +39,13 @@
 				<h3 id="rarity">Rarity: {selectedCard.rarity}</h3>
 				<h3 id="set-name">Set Name: {selectedCard.setName}</h3>
 			</div>
-			<div class="details">
-				<h3>{selectedCard.text}</h3>
+			<div class="text-details">
+				{#each selectedCard.text.split('\n') as lines (Math.random())}
+					<h3>{lines}</h3>
+				{/each}
 			</div>
 		</div>
+		<Formats legalities={selectedCard.legalities} />
 	</Card>
 	<Button on:click={handleAdd}>Add to Your Cards</Button>
 </div>
@@ -43,6 +53,7 @@
 <style>
 	img {
 		width: 30%;
+		border-radius: 12px;
 		box-shadow: 1px 1px 8px rgb(0 0 0 / 50%);
 	}
 	.card-details {
@@ -52,7 +63,7 @@
 	.back-button {
 		cursor: pointer;
 	}
-	.detail-container{
+	.detail-container {
 		display: flex;
 		flex-direction: column;
 	}
@@ -60,6 +71,12 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+	}
+	.text-details {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 0;
 	}
 	h1 {
 		color: #3e2d2d;
@@ -71,5 +88,4 @@
 		padding: 0 2%;
 		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 	}
-	
 </style>
