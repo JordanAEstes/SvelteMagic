@@ -1,6 +1,10 @@
 {
   "name": "card-fetcher",
   "version": "0.0.1",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "start": "node build/index.js",
     "dev": "svelte-kit dev",
@@ -21,5 +25,8 @@
     "prettier-plugin-svelte": "^2.5.0",
     "svelte": "^3.44.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@sveltejs/adapter-node": "^1.0.0-next.73"
+  }
 }
